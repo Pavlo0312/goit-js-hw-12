@@ -2,22 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+    <meta
+      name="description"
+      content="Search and view high-quality images using Pixabay API."
+    />
+    <meta name="keywords" content="images, search, Pixabay, gallery" />
+    <meta name="author" content="Your Name" />
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet" />
     <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
+    />
+    <title>Image Search</title>
   </head>
+
   <body>
-    <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
-
-    <main>
-      <!-- Loads the specified .html file -->
-      <load src="./partials/vite-promo.html" />
-      <load src="./partials/badges.html" />
-    </main>
-
-    <load src="./partials/footer.html" />
-
+    <form class="form">
+      <input type="text" class="user-input" placeholder="Search images..." />
+      <button type="submit" class="submit-button" aria-label="Search images">
+        Search
+      </button>
+    </form>
+    <ul class="gallery"></ul>
+    <div class="load"></div>
+    <button
+      class="submit-button add-more-button hide"
+      aria-label="Load more images"
+    >
+      Load more
+    </button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"></script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
