@@ -161,3 +161,57 @@ form {
 .hide {
   display: none;
 }
+/* ===== LOAD MORE + LOADER ===== */
+.load-more-container {
+  display: flex;
+  flex-direction: column; /* кнопка зверху, лоадер знизу */
+  align-items: center;
+  margin: 20px auto;
+  gap: 12px; /* відстань між кнопкою та лоадером */
+}
+
+/* Кнопка Load more */
+.load-more {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: #4e75ff;
+  font-weight: 500;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.64px;
+  line-height: 24px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s, transform 0.2s;
+}
+.load-more:hover {
+  background-color: #6c8cff;
+  transform: scale(1.05);
+}
+.load-more:active {
+  transform: scale(0.97);
+}
+
+/* Ховаємо елементи коли треба */
+.is-hidden {
+  display: none !important;
+}
+
+/* Спінер */
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #4e75ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

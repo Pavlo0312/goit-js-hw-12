@@ -8,8 +8,12 @@
       content="Search and view high-quality images using Pixabay API."
     />
     <meta name="keywords" content="images, search, Pixabay, gallery" />
-    <meta name="author" content="Your Name" />
+    <meta name="author" content="Pavlo Huriev" />
+
+    <!-- Fonts -->
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet" />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="./css/styles.css" />
     <link
       rel="stylesheet"
@@ -19,24 +23,42 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
     />
-    <title>Image Search</title>
+
+    <title>Image Search App</title>
   </head>
 
   <body>
+    <!-- Search form -->
     <form class="form">
-      <input type="text" class="user-input" placeholder="Search images..." />
+      <input
+        type="text"
+        class="user-input"
+        name="search-text"
+        placeholder="Search images..."
+        required
+        aria-label="Search query"
+      />
       <button type="submit" class="submit-button" aria-label="Search images">
         Search
       </button>
     </form>
+
+    <!-- Gallery -->
     <ul class="gallery"></ul>
-    <div class="load"></div>
-    <button
-      class="submit-button add-more-button hide"
-      aria-label="Load more images"
-    >
-      Load more
-    </button>
+
+    <!-- Load more + Loader (за вимогами) -->
+    <div class="load-more-container">
+      <button
+        type="button"
+        class="load-more is-hidden"
+        aria-label="Load more images"
+      >
+        Load more
+      </button>
+      <span class="loader is-hidden"></span>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"></script>
     <script type="module" src="./main.js"></script>

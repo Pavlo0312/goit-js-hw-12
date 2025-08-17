@@ -1,107 +1,72 @@
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import errorIcon from '../img/error.svg';
 
-const box = document.querySelector('.gallery');
-const load = document.querySelector('.load');
-const addMoreButton = document.querySelector('.add-more-button');
-const iziOption = {
-  messageColor: '#FAFAFB',
-  messageSize: '16px',
-  backgroundColor: '#EF4040',
-  iconUrl: errorIcon,
-  transitionIn: 'bounceInLeft',
-  position: 'topRight',
-  displayMode: 'replace',
-  closeOnClick: true,
-};
+// Елементи інтерфейсу
+const galleryEl = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
+const loaderEl = document.querySelector('.loader');
 
-export function addLoadStroke(daddyElement) {
-  if (!daddyElement) {
-    console.error('Parent element not found');
-    return;
-  }
+// Ініціалізуємо lightbox один раз
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
-  // Додаємо надпис та індикатор завантаження
-  daddyElement.insertAdjacentHTML(
-    'beforeend',
-    '<p class="loading-text">Wait, the image is loaded</p><span class="loader"></span>'
-  );
-  addMoreButton.classList.add('hide'); // Приховуємо кнопку "Load more"
-}
+/**
+ * Додає картки в галерею за одну операцію та робить refresh лайтбоксу
+ * @param {Array} images
+ */
+export function createGallery(images) {
+  if (!images || images.length === 0) return;
 
-export function removeLoadStroke(daddyElement) {
-  if (!daddyElement) {
-    console.error('Parent element not found');
-    return;
-  }
-
-  // Видаляємо надпис та індикатор завантаження
-  const textElement = daddyElement.querySelector('.loading-text');
-  const loaderElement = daddyElement.querySelector('.loader');
-
-  if (textElement) textElement.remove();
-  if (loaderElement) loaderElement.remove();
-
-  if (addMoreButton) {
-    addMoreButton.classList.remove('hide'); // Показуємо кнопку "Load more"
-    console.log('Load more button shown'); // Додано для перевірки
-  } else {
-    console.error('Load more button not found'); // Додано для перевірки
-  }
-}
-
-export function markup(data) {
-  if (!box) {
-    console.error('Gallery element not found');
-    return;
-  }
-
-  const { hits } = data;
-
-  if (hits.length === 0) {
-    iziToast.show({
-      ...iziOption,
-      message: 'Sorry, there are no images matching your search query. Please, try again!',
-    });
-    box.innerHTML = '';
-    removeLoadStroke(load); // Приховуємо надпис, якщо результатів немає
-    return;
-  }
-
-  const markup = hits
+  const markup = images
     .map(
-      image =>
-        `<li class='gallery__item'>
-        <a class='gallery__link' href="${image.largeImageURL}">
-        <img class='gallery__img' src="${image.webformatURL}" alt="${image.tags}" />
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `
+      <li class="gallery__item">
+        <a class="gallery__link" href="${largeImageURL}">
+          <img class="gallery__img" src="${webformatURL}" alt="${tags}" />
           <div class="grid">
-            <p>Likes</p>
-            <p>Views</p>
-            <p>Comment</p>
-            <p>Downloads</p>
-            <span>${image.likes}</span>
-            <span>${image.views}</span>
-            <span>${image.comments}</span>
-            <span>${image.downloads}</span>
+            <p>Likes</p><p>Views</p><p>Comments</p><p>Downloads</p>
+            <span>${likes}</span><span>${views}</span><span>${comments}</span><span>${downloads}</span>
           </div>
         </a>
       </li>`
     )
-    .join(' ');
+    .join('');
 
-  box.insertAdjacentHTML('beforeend', markup); // Додаємо зображення до галереї
-  removeLoadStroke(load); // Приховуємо надпис після додавання зображень
+  galleryEl.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
+}
 
-  // Ініціалізація SimpleLightbox
-  const galleryLinks = document.querySelectorAll('.gallery a');
-  if (galleryLinks.length > 0) {
-    const lightbox = new SimpleLightbox('.gallery a', {
-      captionsData: 'alt',
-      captionDelay: 250,
-    });
-    lightbox.refresh();
-  }
+/** Очищає галерею */
+export function clearGallery() {
+  galleryEl.innerHTML = '';
+}
+
+/** Показати лоадер */
+export function showLoader() {
+  loaderEl.classList.remove('is-hidden');
+}
+
+/** Сховати лоадер */
+export function hideLoader() {
+  loaderEl.classList.add('is-hidden');
+}
+
+/** Показати кнопку Load more */
+export function showLoadMoreButton() {
+  loadMoreBtn.classList.remove('is-hidden');
+}
+
+/** Сховати кнопку Load more */
+export function hideLoadMoreButton() {
+  loadMoreBtn.classList.add('is-hidden');
 }
